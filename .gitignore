@@ -3,3 +3,4 @@ dist
 qodo
 
 package-lock.json
+.env
