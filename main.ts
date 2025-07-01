@@ -1,12 +1,17 @@
-import express, { Request, Response } from "express";
+import express, { Response } from "express";
 import dotenv from "dotenv";
+import MongooseService from "./src/infra/database/mongoose.config";
+import mongoose from "mongoose";
 
 dotenv.config();
 const app = express();
 
-const PORT = process.env.PORT;
+const { PORT, DB = "" } = process.env;
 
-app.get("/", (req: Request, res: Response) => {
+const mongo = new MongooseService(mongoose);
+mongo.connect(DB);
+
+app.get("/", (res: Response) => {
   res.status(200).send("Hello World");
 });
 

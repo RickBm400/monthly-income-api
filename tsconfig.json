@@ -36,8 +36,17 @@
 
     /* Completeness */
     "skipLibCheck": true,                         // Skip type checking of declaration files
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "baseUrl": "./",
+    "paths": {
+      "@infra/*": ["./src/infra/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@application/*": ["./src/application/*"]
+    },
   },
   "include": ["src"],                            // Only include source files
-  "exclude": ["node_modules", "dist", "**/*.test.ts"] // Exclude build/test artifacts
+  "exclude": ["node_modules", "dist", "**/*.test.ts"], // Exclude build/test artifacts
+  "ts-node": {
+    "files": true
+  }
 }
