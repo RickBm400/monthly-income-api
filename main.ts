@@ -1,15 +1,13 @@
 import express, { Response } from "express";
 import dotenv from "dotenv";
 import MongooseService from "./src/infra/database/mongoose.config";
-import mongoose from "mongoose";
 
 dotenv.config();
 const app = express();
 
 const { PORT, DB = "" } = process.env;
 
-const mongo = new MongooseService(mongoose);
-mongo.connect(DB);
+new MongooseService(DB).connect();
 
 app.get("/", (res: Response) => {
   res.status(200).send("Hello World");
