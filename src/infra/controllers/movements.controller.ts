@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
-import RouterBuilder, { Methods } from "../utils/controller.utils";
+import RouterBuilder from "@infra/utils/router-builder.utils";
+import { HTTPVerbs } from "@domain/interfaces/controller-builder.interface";
 import Router from "express";
 
 const MovementsRouter = new RouterBuilder("movements", Router());
 
+// GET - all users
 MovementsRouter.controller({
-  method: Methods.GET,
+  method: HTTPVerbs.GET,
   path: "/",
   handler: async function (req: Request, res: Response) {
     res.status(200).json({
@@ -14,13 +16,15 @@ MovementsRouter.controller({
   },
 });
 
+// POST - New user
 MovementsRouter.controller({
-  method: Methods.GET,
-  path: "/2",
+  method: HTTPVerbs.POST,
+  path: "/",
   handler: async function (req: Request, res: Response) {
-    res.status(200).json({
-      message: "hello from movements 2",
-    });
+    try {
+    } catch (error) {
+      res;
+    }
   },
 });
 
