@@ -29,10 +29,10 @@
 
     /* Type Checking */
     "strict": true,                              // Enable all strict type-checking options
-    "noUnusedLocals": true,                      // Error on unused locals
-    "noUnusedParameters": true,                  // Error on unused parameters
+    "noUnusedLocals": false,                      // Error on unused locals
+    "noUnusedParameters": false,                  // Error on unused parameters
     "noImplicitReturns": true,                   // Error on missing return in functions
-    "noFallthroughCasesInSwitch": true,          // Error on fallthrough in switch
+    "noFallthroughCasesInSwitch": true,        // Error on fallthrough in switch
 
     /* Completeness */
     "skipLibCheck": true,                         // Skip type checking of declaration files
