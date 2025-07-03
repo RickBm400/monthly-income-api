@@ -1,9 +1,9 @@
-import { Router } from "express";
 import expressAsyncHandler from "express-async-handler";
 import IRouterBuilder, {
   ControllerInput,
   HTTPVerbs,
-} from "@domain/interfaces/controller-builder.interface";
+} from "@domain/interfaces/router-builder.interface";
+import { Router } from "express";
 
 /**
  * Implements the IRouterBuilder interface for Express routers, allowing dynamic
@@ -14,7 +14,11 @@ import IRouterBuilder, {
  * @param router - The Express Router instance.
  */
 export default class RouterBuilder implements IRouterBuilder<Router> {
-  constructor(public name: string, public router: Router) {}
+  router;
+
+  constructor(public name: string) {
+    this.router = Router();
+  }
 
   /**
    * Registers a route handler on the router for the specified HTTP verb and path.

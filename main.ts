@@ -1,13 +1,13 @@
-import express, { Response, Request } from "express";
 import dotenv from "dotenv";
-import MongooseService from "./src/infra/database/mongoose.config";
+import express, { Response, Request } from "express";
+import MongooseService from "./src/infra/configs/mongoose.config";
 import router from "./src/infra/configs/routes";
 
 dotenv.config();
 const app = express();
-app.use("/api/", router.router);
-
 const { PORT, DB = "" } = process.env;
+
+app.use("/api/", router.router);
 
 new MongooseService(DB).connect();
 

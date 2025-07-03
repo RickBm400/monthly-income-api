@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import RouterBuilder from "@infra/utils/router-builder.utils";
-import { HTTPVerbs } from "@domain/interfaces/controller-builder.interface";
-import Router from "express";
+import { HTTPVerbs } from "@domain/interfaces/router-builder.interface";
 
-const MovementsRouter = new RouterBuilder("movements", Router());
+const MovementsRouter = new RouterBuilder("movements");
 
 // GET - all users
 MovementsRouter.controller({
@@ -22,6 +21,9 @@ MovementsRouter.controller({
   path: "/",
   handler: async function (req: Request, res: Response) {
     try {
+      res.status(200).json({
+        message: "ola",
+      });
     } catch (error) {
       res;
     }
