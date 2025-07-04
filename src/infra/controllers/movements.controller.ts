@@ -27,4 +27,4 @@ MovementsRouter.GET({
   },
 });
 
-export const Movements = MovementsRouter.getMeta();
+export const Movements = MovementsRouter;

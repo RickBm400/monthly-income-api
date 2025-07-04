@@ -1,11 +1,5 @@
+import BroadCastRoutes from "@infra/utils/router-broadcast.utils";
 import * as controllers from "@infra/controllers";
-import { Router } from "express";
+const controllerList = Object.values(controllers);
 
-const routerInstance = Router();
-const routes: { name: string; router: Router }[] = Object.values(controllers);
-
-routes.forEach((route) => {
-  routerInstance.use(route.name, route.router);
-});
-
-export default { router: routerInstance };
+export const routes: BroadCastRoutes = new BroadCastRoutes(controllerList);

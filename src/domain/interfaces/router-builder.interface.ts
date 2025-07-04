@@ -8,6 +8,11 @@ export enum HTTPVerbs {
   DELETE = "DELETE",
 }
 
+export interface RouterMetadata<T> {
+  name: string;
+  router: T;
+}
+
 export interface ControllerInput {
   handler: RequestHandler;
   method?: HTTPVerbs;
@@ -18,5 +23,5 @@ export default abstract class ACRouterBuilder<T> {
   protected readonly name: string;
   readonly router: T;
   protected abstract controller(input: ControllerInput): void;
-  abstract getMeta(): { name: string; router: T };
+  abstract getMeta(): RouterMetadata<T>;
 }
