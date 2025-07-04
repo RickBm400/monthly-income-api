@@ -1,12 +1,10 @@
 import { Request, Response } from "express";
 import RouterBuilder from "@infra/utils/router-builder.utils";
-import { HTTPVerbs } from "@domain/interfaces/router-builder.interface";
 
 const MovementsRouter = new RouterBuilder("movements");
 
 // GET - all users
-MovementsRouter.controller({
-  method: HTTPVerbs.GET,
+MovementsRouter.GET({
   path: "/",
   handler: async function (req: Request, res: Response) {
     res.status(200).json({
@@ -16,8 +14,7 @@ MovementsRouter.controller({
 });
 
 // POST - New user
-MovementsRouter.controller({
-  method: HTTPVerbs.POST,
+MovementsRouter.GET({
   path: "/",
   handler: async function (req: Request, res: Response) {
     try {

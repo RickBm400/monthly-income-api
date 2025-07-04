@@ -14,9 +14,9 @@ export interface ControllerInput {
   path: string;
 }
 
-export default interface IRouterBuilder<T> {
-  name: string;
-  router: T;
-  controller(input: ControllerInput): void;
-  getMeta(): { name: string; router: T };
+export default abstract class ACRouterBuilder<T> {
+  protected readonly name: string;
+  readonly router: T;
+  protected abstract controller(input: ControllerInput): void;
+  abstract getMeta(): { name: string; router: T };
 }

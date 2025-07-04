@@ -1,9 +1,13 @@
 import expressAsyncHandler from "express-async-handler";
-import IRouterBuilder, {
+import ACRouterBuilder, {
   ControllerInput,
   HTTPVerbs,
 } from "@domain/interfaces/router-builder.interface";
 import { Router } from "express";
+
+type HTTPVerbMethods = {
+  [K in HTTPVerbs]: (param: ControllerInput) => void;
+};
 
 /**
  * Implements the IRouterBuilder interface for Express routers, allowing dynamic
@@ -11,15 +15,18 @@ import { Router } from "express";
  * metadata about the router instance, including its name and router object.
  *
  * @param name - The base name for the router.
- * @param router - The Express Router instance.
  */
-export default class RouterBuilder implements IRouterBuilder<Router> {
-  router;
-
-  constructor(public name: string) {
-    this.router = Router();
+export default class RouterBuilder
+  extends ACRouterBuilder<Router>
+  implements HTTPVerbMethods
+{
+  constructor(
+    protected readonly name: string,
+    readonly router: Router = Router(),
+  ) {
+    super();
+    this.$_InitVerbs(this);
   }
-
   /**
    * Registers a route handler on the router for the specified HTTP verb and path.
    *
@@ -28,7 +35,11 @@ export default class RouterBuilder implements IRouterBuilder<Router> {
    * @param path - The route path (defaults to "/").
    * @throws Error if the HTTP method is not provided.
    */
-  controller({ handler, method = HTTPVerbs.GET, path = "/" }: ControllerInput) {
+  protected controller({
+    handler,
+    method = HTTPVerbs.GET,
+    path = "/",
+  }: ControllerInput) {
     if (!method) throw new Error("method is required");
 
     const methodToString = method.toString().toLowerCase();
@@ -46,4 +57,20 @@ export default class RouterBuilder implements IRouterBuilder<Router> {
       router: this.router,
     };
   }
+
+  private $_InitVerbs(routerBuilder: RouterBuilder) {
+    (Object.values(HTTPVerbs) as HTTPVerbs[]).forEach(
+      (method: Partial<HTTPVerbs>) => {
+        (routerBuilder as any)[method] = (param: ControllerInput) => {
+          routerBuilder.controller({ ...param, method: method });
+        };
+      },
+    );
+  }
+
+  GET!: (param: ControllerInput) => void;
+  POST!: (param: ControllerInput) => void;
+  PATCH!: (param: ControllerInput) => void;
+  PUT!: (param: ControllerInput) => void;
+  DELETE!: (param: ControllerInput) => void;
 }
