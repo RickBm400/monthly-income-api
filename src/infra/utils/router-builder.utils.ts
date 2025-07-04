@@ -3,7 +3,7 @@ import ACRouterBuilder, {
   ControllerInput,
   HTTPVerbs,
 } from "@domain/interfaces/router-builder.interface";
-import { Router } from "express";
+import { RequestHandler, response, Router } from "express";
 
 type HTTPVerbMethods = {
   [K in HTTPVerbs]: (param: ControllerInput) => void;
@@ -43,6 +43,7 @@ export default class RouterBuilder
     if (!method) throw new Error("method is required");
 
     const methodToString = method.toString().toLowerCase();
+
     (this.router as any)[methodToString](path, expressAsyncHandler(handler));
   }
 
@@ -73,4 +74,8 @@ export default class RouterBuilder
   PATCH!: (param: ControllerInput) => void;
   PUT!: (param: ControllerInput) => void;
   DELETE!: (param: ControllerInput) => void;
+
+  static create(name: string) {
+    return new RouterBuilder(name);
+  }
 }
