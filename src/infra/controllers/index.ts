@@ -1,2 +1,2 @@
-export * from "./movements.controller";
-export * from "./user.controller";
+export { default as MovementController } from "./movements.controller";
+export { default as UserController } from "./user.controller";
