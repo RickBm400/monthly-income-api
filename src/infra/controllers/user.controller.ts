@@ -1,5 +1,5 @@
 import { NewUserInputDTO } from "@application/dtos/inputs/user-input.dto";
-import { UserOutputDTO } from "@application/dtos/outputs/user-output.dto";
+
 import UserService from "@application/services/user.service";
 import RouterBuilder from "@infra/utils/router-builder.utils";
 import { Request, Response } from "express";
