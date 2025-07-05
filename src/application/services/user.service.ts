@@ -1,3 +1,4 @@
+import { UserOutputDTO } from "@application/dtos/outputs/user-output.dto";
 import UserRepository from "@infra/repositories/user.repository";
 
 export default class UserService {
@@ -6,6 +7,8 @@ export default class UserService {
   ) {}
 
   async postNewUser(payload: any) {
-    return await this.userRepository.createNewUser(payload);
+    const user = await this.userRepository.createNewUser(payload);
+
+    return UserOutputDTO.create(user.user);
   }
 }

@@ -1,39 +1,28 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  validateOrReject,
-} from "class-validator";
-import { validate, ValidationError } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
-export class NewUserInputDTO {
+import { DTOBaseClass } from "../base.dto";
+
+export class NewUserInputDTO extends DTOBaseClass<NewUserInputDTO> {
   @IsString()
-  @IsNotEmpty({
-    message: "name cant be empty",
-  })
+  @IsNotEmpty()
   name: string;
 
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
+  @IsString()
   password: string;
 
   @IsString()
   profilePicture: string;
 
   constructor(params: Partial<NewUserInputDTO>) {
+    super();
     Object.assign(this, params);
   }
 
-  static async Set(params: Partial<NewUserInputDTO>) {
-    const _instance = new NewUserInputDTO(params);
-    const validation = await validate(_instance);
-    if (validation.length) {
-      throw new Error(
-        JSON.stringify(JSON.parse(JSON.stringify(validation[0].constraints))),
-      );
-    }
-    return _instance;
+  static create(params: Partial<NewUserInputDTO>) {
+    return new NewUserInputDTO(params);
   }
 }

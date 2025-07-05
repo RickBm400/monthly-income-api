@@ -8,8 +8,9 @@ const CatchMiddleware = (
   next: NextFunction,
 ) => {
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    status: err.message,
+    status: StatusCodes.INTERNAL_SERVER_ERROR,
     error: ReasonPhrases.INTERNAL_SERVER_ERROR,
+    data: err.message,
   });
 };
 
