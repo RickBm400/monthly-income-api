@@ -37,6 +37,7 @@
     /* Completeness */
     "skipLibCheck": true,                         // Skip type checking of declaration files
     "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
     "baseUrl": "./",
     "paths": {
       "@infra/*": ["./src/infra/*"],

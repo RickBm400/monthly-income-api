@@ -1,22 +1,21 @@
-import { Request, Response } from "express";
 import RouterBuilder from "@infra/utils/router-builder.utils";
 
-const MovementsRouter = new RouterBuilder("movements");
+const MovementsRouter = RouterBuilder.create("movements");
 
 // GET - all users
 MovementsRouter.GET({
   path: "/",
-  handler: async function (req: Request, res: Response) {
+  handler: async function (req, res) {
     res.status(200).json({
-      message: "hello from movements olo",
+      message: "hello from movements",
     });
   },
 });
 
 // POST - New user
-MovementsRouter.GET({
+MovementsRouter.POST({
   path: "/",
-  handler: async function (req: Request, res: Response) {
+  handler: async function (req, res) {
     try {
       res.status(200).json({
         message: "ola",
@@ -27,4 +26,4 @@ MovementsRouter.GET({
   },
 });
 
-export const Movements = MovementsRouter;
+export default MovementsRouter;

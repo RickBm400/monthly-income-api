@@ -10,6 +10,8 @@ export default class UserRepository {
     await _newUser.save().then((user) => {
       return new User(user);
     });
-    return _newUser;
+    return {
+      user: _newUser,
+    };
   }
 }
