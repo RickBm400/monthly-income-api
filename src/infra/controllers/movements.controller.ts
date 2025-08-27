@@ -5,7 +5,7 @@ const MovementsRouter = RouterBuilder.create("movements");
 // GET - all users
 MovementsRouter.GET({
   path: "/",
-  handler: async function (req, res) {
+  handler: (req, res) => {
     res.status(200).json({
       message: "hello from movements",
     });
@@ -15,7 +15,7 @@ MovementsRouter.GET({
 // POST - New user
 MovementsRouter.POST({
   path: "/",
-  handler: async function (req, res) {
+  handler: (req, res) => {
     try {
       res.status(200).json({
         message: "ola",

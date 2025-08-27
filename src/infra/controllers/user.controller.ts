@@ -10,7 +10,7 @@ const userService = new UserService();
 
 UsersRouter.POST({
   path: "/",
-  handler: async function (req: Request, res: Response) {
+  handler: async (req: Request, res: Response) => {
     const body = await NewUserInputDTO.create(req.body).validate();
     const payload = await userService.postNewUser(body);
 

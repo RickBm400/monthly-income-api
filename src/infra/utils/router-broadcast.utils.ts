@@ -8,25 +8,28 @@ export default class BroadCastRoutes {
   ) {}
 
   broadCast(): Router {
-    const stringList: string[] = [];
+    const routerList: string[] = [];
 
     this.routerInstances.forEach((routerInstance) => {
-      const { name, router } = routerInstance.getMeta();
-      stringList.push(`Broadcasting ${name}`);
-      this.router.use(name, router);
+      const { pathName, router } = routerInstance.getMeta();
+      routerList.push(`Broadcasting ${pathName}`);
+      this.router.use(pathName, router);
     });
 
-    const longString = stringList.reduce(
+    this.printRouterList(routerList);
+    return this.router;
+  }
+
+  private printRouterList(routerList: String[]) {
+    const longString = routerList.reduce(
       (long, current) => (long < current.length ? current.length : long),
       0,
     );
 
     console.log("\n " + "-".repeat(longString + 2));
-    stringList.forEach((e) =>
+    routerList.forEach((e) =>
       console.log("| " + e + " ".repeat(longString - e.length) + " |"),
     );
     console.log(" " + "-".repeat(longString + 2) + "\n");
-
-    return this.router;
   }
 }

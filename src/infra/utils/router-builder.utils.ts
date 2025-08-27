@@ -3,7 +3,7 @@ import ACRouterBuilder, {
   ControllerInput,
   HTTPVerbs,
 } from "@domain/interfaces/router-builder.interface";
-import { RequestHandler, response, Router } from "express";
+import { Router } from "express";
 
 type HTTPVerbMethods = {
   [K in HTTPVerbs]: (param: ControllerInput) => void;
@@ -54,7 +54,7 @@ export default class RouterBuilder
    */
   getMeta() {
     return {
-      name: `/${this.name}`,
+      pathName: `/${this.name}`,
       router: this.router,
     };
   }
