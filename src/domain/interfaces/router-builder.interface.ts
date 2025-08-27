@@ -29,8 +29,8 @@ export interface ControllerInput {
  * @template T
  */
 export default abstract class ACRouterBuilder<T> {
-  protected readonly name: string;
-  readonly router: T;
+  protected readonly _name: string;
+  readonly _router: T;
   protected abstract controller(input: ControllerInput): void;
   abstract getMeta(): RouterMetadata<T>;
 }

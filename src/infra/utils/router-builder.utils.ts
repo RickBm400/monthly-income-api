@@ -21,11 +21,11 @@ export default class RouterBuilder
   implements HTTPVerbMethods
 {
   constructor(
-    protected readonly name: string,
-    readonly router: Router = Router(),
+    protected readonly _name: string,
+    readonly _router: Router = Router(),
   ) {
     super();
-    this.$_InitVerbs(this);
+    this.initializeVerbMethods();
   }
   /**
    * Registers a route handler on the router for the specified HTTP verb and path.
@@ -40,11 +40,16 @@ export default class RouterBuilder
     method = HTTPVerbs.GET,
     path = "/",
   }: ControllerInput) {
-    if (!method) throw new Error("method is required");
+    this.validateControllerInput({ handler, method, path });
 
-    const methodToString = method.toString().toLowerCase();
+    const httpMethod = method.toString().toLowerCase() as keyof Router;
+    const routerMethod = this._router[httpMethod] as Function;
 
-    (this.router as any)[methodToString](path, expressAsyncHandler(handler));
+    if (typeof routerMethod !== "function") {
+      throw new Error(`HTTP method '${method}' is not supported`);
+    }
+
+    routerMethod.call(this._router, path, expressAsyncHandler(handler));
   }
 
   /**
@@ -54,19 +59,19 @@ export default class RouterBuilder
    */
   getMeta() {
     return {
-      pathName: `/${this.name}`,
-      router: this.router,
+      pathName: `/${this._name}`,
+      router: this._router,
     };
   }
 
-  private $_InitVerbs(routerBuilder: RouterBuilder) {
-    (Object.values(HTTPVerbs) as HTTPVerbs[]).forEach(
-      (method: Partial<HTTPVerbs>) => {
-        (routerBuilder as any)[method] = (param: ControllerInput) => {
-          routerBuilder.controller({ ...param, method: method });
-        };
-      },
-    );
+  private initializeVerbMethods() {
+    const httpVerbs = Object.values(HTTPVerbs) as HTTPVerbs[];
+
+    httpVerbs.forEach((verb: Partial<HTTPVerbs>) => {
+      (this as RouterBuilder)[verb] = (param: ControllerInput): void => {
+        this.controller({ ...param, method: verb });
+      };
+    });
   }
 
   GET!: (param: ControllerInput) => void;
@@ -75,7 +80,32 @@ export default class RouterBuilder
   PUT!: (param: ControllerInput) => void;
   DELETE!: (param: ControllerInput) => void;
 
+  private validateControllerInput({
+    handler,
+    method,
+    path,
+  }: ControllerInput): void {
+    if (!handler) {
+      throw new Error("Handler function is required");
+    }
+    if (!method) {
+      throw new Error("HTTP method is required");
+    }
+    if (typeof handler !== "function") {
+      throw new Error("Handler must be a function");
+    }
+    if (typeof path !== "string") {
+      throw new Error("Path must be a string");
+    }
+  }
+
   static create(name: string) {
     return new RouterBuilder(name);
+  }
+
+  // implementing Fluent API Pattern
+  public configure(callback: (builder: RouterBuilder) => void): RouterBuilder {
+    callback(this);
+    return this;
   }
 }
