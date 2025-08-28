@@ -103,7 +103,13 @@ export default class RouterBuilder
     return new RouterBuilder(name);
   }
 
-  // implementing Fluent API Pattern
+  /**
+   * Implement fluent api pattern for better instance building
+   *
+   * @public
+   * @param {(builder: RouterBuilder) => void} callback
+   * @returns {RouterBuilder}
+   */
   public configure(callback: (builder: RouterBuilder) => void): RouterBuilder {
     callback(this);
     return this;

@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express, { Response, Request } from "express";
 import MongooseService from "./src/infra/configs/mongoose.config";
-import CatchMiddleware from "./src/infra/configs/middlewares/catch-error.middleware";
+import catchMiddleware from "./src/infra/configs/middlewares/catch-error.middleware";
 import { routes } from "./src/infra/configs/routes";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -17,10 +17,10 @@ app.use("/api/", routes.broadCast());
 new MongooseService(DB).connect();
 
 app.get("/", (req: Request, res: Response) => {
-  res.status(200).send("connection stablished");
+  res.status(200).send("connection established");
 });
 
-app.use(CatchMiddleware);
+app.use(catchMiddleware);
 
 app
   .listen(PORT, () => {

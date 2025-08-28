@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
 
-const CatchMiddleware = (
+const catchMiddleware = (
   err: Error,
   req: Request,
   res: Response,
@@ -14,4 +14,4 @@ const CatchMiddleware = (
   });
 };
 
-export default CatchMiddleware;
+export default catchMiddleware;
