@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { RequestHandler, RequestParamHandler } from "express";
 
 export enum HTTPVerbs {
   GET = "GET",
@@ -14,7 +14,7 @@ export interface RouterMetadata<T> {
 }
 
 export interface ControllerInput {
-  handler: RequestHandler;
+  handler: RequestParamHandler;
   method?: HTTPVerbs;
   path: string;
 }

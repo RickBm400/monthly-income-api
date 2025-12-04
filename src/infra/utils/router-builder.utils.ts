@@ -49,7 +49,7 @@ export default class RouterBuilder
       throw new Error(`HTTP method '${method}' is not supported`);
     }
 
-    routerMethod.call(this._router, path, expressAsyncHandler(handler));
+    routerMethod.call(this._router, path, handler);
   }
 
   /**
